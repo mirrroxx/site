@@ -14,14 +14,70 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"
             integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
             crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/breakfast.css') }}">
 </head>
 <body>
-<form class="form-signin">
-    <h1 class="h3 mb-3 font-weight-normal">Вход в учетную запись</h1>
-    <label for="inputEmail" class="sr-only">Email address</label>
-    <input type="email" id="inputEmail" class="form-control" placeholder="Почта" required autofocus>
-    <label for="inputPassword" class="sr-only">Password</label>
-    <input type="password" id="inputPassword" class="form-control" placeholder="Пароль" required>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
-</form>
+<header>
+    <div class="collapse bg-dark" id="navbarHeader">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8 col-md-7 py-4">
+                    <h4 class="text-white">Плюсы использования системы безналичной оплаты школьного питания</h4>
+                    <ul>
+                        <li><p class="text-white">Спокойствие родителей, что их ребенок покушал</p></li>
+                        <li><p class="text-white">Удобство пополнения</p></li>
+                    </ul>
+                </div>
+                <div class="col-sm-4 offset-md-1 py-4">
+                    <h4 class="text-white">Контакты</h4>
+                    <ul class="list-unstyled">
+                        <li><p class="text-white">Телефон горячей линии: +7 123 345 56 78</p></li>
+                        <li><a href="#" class="text-white">Написать на почту</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="navbar navbar-dark shadow-sm">
+        <div class="container d-flex justify-content-between">
+            <a href="#" class="navbar-brand d-flex align-items-center">
+                <img src="{{ url_for('static', filename='img/logo.png') }}" weight="40" height="40"
+                     class="d-inline-block align-text-top">
+                <strong class="page-name">Вкусные перемены</strong>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader"
+                    aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation" , position="">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </div>
+    <div class="container mt-5">
+        <h2 class="mb-4">Добавление блюда</h2>
+        <form action="#" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="dishName">Название блюда:</label>
+                <input type="text" class="form-control" id="dishName" name="dishName" required>
+            </div>
+            <div class="form-group">
+                <label for="price">Цена:</label>
+                <input type="number" class="form-control" id="price" name="price" step="0.01" required>
+            </div>
+            <div class="form-group">
+                <label for="menuType">Тип:</label>
+                <select class="form-control" id="menuType" name="menuType" required>
+                    <option value="">Выбери тип меню</option>
+                    <option value="breakfast">Утреннее меню</option>
+                    <option value="lunch">Обеденное меню</option>
+                    <option value="dinner">Вечернее меню</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="dishImage">Фото блюда:</label>
+                <input type="file" class="form-control-file" id="dishImage" name="dishImage" accept="image/*">
+            </div>
+            <button type="submit" class="btn btn-primary">Добавить</button>
+        </form>
+    </div>
+</header>
 </body>
+</html>
