@@ -111,7 +111,7 @@
     <div class="navbar navbar-dark shadow-sm">
       <div class="container d-flex justify-content-between">
         <a href="#" class="navbar-brand d-flex align-items-center">
-          <img src="logo.png" weight="40" height="40" class="d-inline-block align-text-top">
+          <img src="{{ url_for('static', filename='img/logo.png') }}" weight="40" height="40" class="d-inline-block align-text-top">
           <strong class="page-name">Вкусные перемены</strong>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation", position="">
@@ -127,7 +127,7 @@
       <div class="container">
         <h1 class="jumbotron-heading">Безналичная оплата школьного питания</h1>
         <p>
-          <a href="#" class="btn btn-primary my-2">Войти</a>
+          <a href="login" class="btn btn-primary my-2">Войти</a>
         </p>
       </div>
     </section>
@@ -136,15 +136,15 @@
       <div class="container">
         <div class="row">
           <figure class="a">
-            <a href="@"><img src="breakfast.jpg" width="300" height="300" class="photo1"></a>
+            <a href="breakfast"><img src="{{ url_for('static', filename='img/breakfast.jpg') }}" width="300" height="300" class="photo1"></a>
             <figcaption class="a-nadpis">Утреннее меню</figcaption>
           </figure>
           <figure class="b">
-            <a href="$"><img src="dinner2.jpg" width="300" height="300" class="photo2"></a>
+            <a href="dinner1"><img src="{{ url_for('static', filename='img/dinner2.jpg') }}" width="300" height="300" class="photo2"></a>
             <figcaption class="b-nadpis">Обеденное меню</figcaption>
           </figure>
           <figure class="c">
-            <a href="^"><img src="dinner.jpg" width="300" height="300" class="photo3"></a>
+            <a href="dinner2"><img src="{{ url_for('static', filename='img/dinner.jpg') }}" width="300" height="300" class="photo3"></a>
             <figcaption class="c-nadpis">Вечернее меню</figcaption>
           </figure>
         </div>
