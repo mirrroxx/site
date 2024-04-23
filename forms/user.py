@@ -11,12 +11,11 @@ class RegisterForm(FlaskForm):
     password = PasswordField('Пароль', validators=[DataRequired()])
     password_again = PasswordField('Повторите пароль', validators=[DataRequired()])
     name = StringField('Имя пользователя', validators=[DataRequired()])
+    submit = SubmitField('Сохранить')
+
+class LoginForm(FlaskForm):
+    email = EmailField('Почта', validators=[DataRequired()])
+    password = PasswordField('Пароль', validators=[DataRequired()])
+
     submit = SubmitField('Войти')
 
-
-def set_password(self, password):
-    self.hashed_password = generate_password_hash(password)
-
-
-def check_password(self, password):
-    return check_password_hash(self.hashed_password, password)
