@@ -41,25 +41,25 @@
     </style>
 </head>
 <body>
-<div class="container mt-5">
-    <h1>Добавление нового блюда</h1>
-    <form method="post">
-        <input type="text" name="name_of_dish" id="name_of_dish" class="form-control" placeholder="Название блюда">
-        <select class="form-select" name="menu_type" aria-label="menu_type">
-            <option selected>Выберите тип меню</option>
-            <option value="1">Утреннее меню</option>
-            <option value="2">Обеденное меню</option>
-            <option value="3">Вечернее меню</option>
-        </select>
-        <input type="number" name="dish_price" class="form-control" placeholder="Цена блюда">
-        <form method="post" enctype="multipart/form-data">
-            <div class="form-group">
-                <label for="photo">Выберите файл</label>
-                <input type="file" class="form-control-file" id="photo" name="file">
-            </div>
-        </form>
-        <input type="submit" class="btn btn-succes" value="Создать">
-    </form>
-</div>
+<h1>Add Menu Item</h1>
+<form method="POST" enctype="multipart/form-data">
+    <label for="name">Название блюда:</label><br>
+    <input type="text" id="name" name="name" required><br><br>
+
+    <label for="menu_type">Тип меню:</label><br>
+    <select id="menu_type" name="menu_type">
+        <option value="утреннее меню">Утреннее меню</option>
+        <option value="обеденное меню">Обеденное меню</option>
+        <option value="вечернее меню">Вечернее меню</option>
+    </select><br><br>
+
+    <label for="price">Цена:</label><br>
+    <input type="number" id="price" name="price" step="0.01" required><br><br>
+
+    <label for="image">Фотография блюда:</label><br>
+    <input type="file" id="image" name="image"><br><br>
+
+    <input type="submit" value="Добавить">
+</form>
 </body>
 </html>

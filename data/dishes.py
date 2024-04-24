@@ -9,3 +9,6 @@ class Dishes(SqlAlchemyBase):
     time = sqlalchemy.Column(sqlalchemy.String, nullable=False)
     price = sqlalchemy.Column(sqlalchemy.String, nullable=False)
     photo = sqlalchemy.Column(sqlalchemy.String, nullable=False)
+
+    def __repr__(self):
+        return f"{self.id}, {self.name}, {self.time}, {self.price}, {self.photo}"

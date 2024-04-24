@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Вкусные перемены</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"></script>
+    <style>
+        .centered-text {
+                text-align: center;
+                margin-bottom: 40px;
+            }
+
+        .page-name {
+                margin-left: 15px;
+            }
+
+        .row {
+                justify-content: space-between;
+                margin-bottom: 70px;
+            }
+
+        .a-nadpis {
+                margin-left: 90px;
+                margin-top: 20px;
+            }
+
+        .b-nadpis {
+                margin-left: 90px;
+                margin-top: 20px;
+            }
+
+        .c-nadpis {
+                margin-left: 90px;
+                margin-top: 20px;
+            }
+
+        .photo1 {
+                border-radius: 20%;
+                transition: border-radius 0.3s ease-in;
+            }
+
+        .photo2 {
+                border-radius: 20%;
+                transition: border-radius 0.3s ease-in;
+            }
+
+        .photo3 {
+                border-radius: 20%;
+                transition: border-radius 0.3s ease-in;
+            }
+
+        .photo1:hover {
+                border-radius: 10%;
+        }
+
+        .photo2:hover {
+                border-radius: 10%;
+        }
+
+        .photo3:hover {
+                border-radius: 10%;
+        }
+
+        body {
+                background-color: white;
+            }
+
+        .navbar {
+                background-color: rgb(206, 33, 33)
+            }
+
+        .btn {
+                background-color: rgb(206, 33, 33);
+                border-color: rgb(206, 33, 33);
+                border-radius: 5px;
+                transition: border-radius 0.5s ease-in;
+            }
+
+        .btn:hover {
+                border-radius: 15px;
+                background-color: rgb(89, 97, 104);
+                border-color: rgb(89, 97, 104)
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="navbar navbar-dark shadow-sm">
+        <div class="container d-flex justify-content-between">
+            <a href="#" class="navbar-brand d-flex align-items-center">
+                <img src="{{ url_for('static', filename='img/logo.png') }}" weight="40" height="40"
+                     class="d-inline-block align-text-top">
+                <strong class="page-name">Вкусные перемены</strong>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader"
+                    aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation" , position="">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </div>
+</header>
+<h1>Меню на {{day}}</h1>
+{% for i in dishes %}
+<div class="card" style="width: 18rem;">
+    <img src="{{ url_for('static', filename=i.photo) }}" class="card-img-top" alt="изображение блюда">
+    <div class="card-body">
+        <h5 class="card-title">Название блюда: {{ i.name }}</h5>
+        <h4 class="card-title">Цена: {{ i.price }}₽</h4>
+    </div>
+</div>
+{% endfor %}
+</body>
+</html>
