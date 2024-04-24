@@ -1,9 +1,9 @@
-from flask import Flask, render_template, url_for, redirect, request
+from flask import Flask, render_template, url_for, redirect, request, session
 from data import db_session
 from data.dishes import Dishes
 from data.users import User
 from forms.user import RegisterForm, LoginForm
-from flask_login import LoginManager, login_user
+from flask_login import LoginManager, login_user, login_required, current_user, logout_user
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -64,12 +64,24 @@ def login():
     return render_template('login2.html', title='Авторизация', form=form)
 
 
+@app.route('/profile')
+@login_required
+def profile():
+    return render_template('profile.html')
+
+
 @app.route('/')
 def index():
     return render_template("main.html")
 
 
+@app.errorhandler(401)
+def go_login(code):
+    return redirect('/login')
+
+
 @app.route('/breakfast')
+@login_required
 def breakfast():
     db_sess = db_session.create_session()
     dishes = db_sess.query(Dishes).filter(Dishes.time == 'утреннее меню').all()
@@ -77,6 +89,7 @@ def breakfast():
 
 
 @app.route('/dinner1')
+@login_required
 def dinner1():
     db_sess = db_session.create_session()
     dishes = db_sess.query(Dishes).filter(Dishes.time == 'обеденное меню').all()
@@ -84,10 +97,18 @@ def dinner1():
 
 
 @app.route('/dinner2')
+@login_required
 def dinner2():
     db_sess = db_session.create_session()
     dishes = db_sess.query(Dishes).filter(Dishes.time == 'вечернее меню').all()
     return render_template("menu.html", dishes=dishes, day=day)
+
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect("/")
 
 
 @app.route('/add_dish', methods=['GET', 'POST'])
