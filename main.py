@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, redirect, request, session
+from flask import Flask, render_template, url_for, redirect, request, session, abort
 from data import db_session
 from data.dishes import Dishes
 from data.users import User
@@ -145,6 +145,19 @@ def add_dish():
             return "При добавлении произошла ошибка"
 
     return render_template("new_dish.html")
+
+
+@app.route('/dish_delete/<int:id>', methods=['GET', 'POST'])
+@login_required
+def news_delete(id):
+    db_sess = db_session.create_session()
+    dish = db_sess.query(Dishes).filter(Dishes.id == id).first()
+    if dish:
+        db_sess.delete(dish)
+        db_sess.commit()
+    else:
+        abort(404)
+    return redirect('/')
 
     
 if __name__ == '__main__':

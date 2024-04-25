@@ -97,7 +97,7 @@
 <header>
     <div class="navbar navbar-dark shadow-sm">
         <div class="container d-flex justify-content-between">
-            <a href="#" class="navbar-brand d-flex align-items-center">
+            <a href="/" class="navbar-brand d-flex align-items-center">
                 <img src="{{ url_for('static', filename='img/logo.png') }}" weight="40" height="40"
                      class="d-inline-block align-text-top">
                 <strong class="page-name">Вкусные перемены</strong>
@@ -113,6 +113,11 @@
     <div class="card-body">
         <h5 class="card-title">Название блюда: {{ i.name }}</h5>
         <h4 class="card-title">Цена: {{ i.price }}₽</h4>
+        {% if current_user.role == 'cook' or current_user.role == 'admin' %}
+        <a href="/dish_delete/{{ i.id }}" class="btn btn-danger">
+            Удалить
+        </a>
+        {% endif %}
     </div>
 </div>
 {% endfor %}
