@@ -115,6 +115,9 @@
                      class="d-inline-block align-text-top">
                 <strong class="page-name">Вкусные перемены</strong>
             </a>
+            {% if current_user.role == 'admin' %}
+            <a href="add_new_user" class="btn btn-primary my-2">Заявки</a>
+            {% endif %}
             <a href="profile" class="btn btn-outline-light">Профиль</a>
         </div>
     </div>
