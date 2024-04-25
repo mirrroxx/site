@@ -118,8 +118,9 @@
             {% if current_user.role == 'admin' %}
             <a href="add_new_user" class="btn btn-primary my-2">Заявки</a>
             {% endif %}
-            {% if current_user.role == 'cook' or current_user.role == 'admin' %}
-            <a href="add_dish" class="btn btn-primary my-2">Добавить меню</a>
+
+            {% if current_user.role == 'teacher' or current_user.role == 'admin' %}
+            <a href="order" class="btn btn-primary my-2">Заявки для столовой</a>
             {% endif %}
             <a href="profile" class="btn btn-outline-light">Профиль</a>
         </div>
@@ -171,6 +172,7 @@
     <h2>Контакты</h2>
     <p>Телефон: +7 123 456-78-90</p>
     <p>Электронная почта: info@example.com</p>
+    <p><a href='/api'>Наш офис</a></p>
 </footer>
 
 </div>
