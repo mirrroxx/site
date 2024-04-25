@@ -5,7 +5,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from .db_session import SqlAlchemyBase
 
 
-class application(SqlAlchemyBase, UserMixin):
+class Application(SqlAlchemyBase, UserMixin):
     __tablename__ = 'application'
 
     id = sqlalchemy.Column(sqlalchemy.Integer,
@@ -27,3 +27,6 @@ class application(SqlAlchemyBase, UserMixin):
 
     def check_password(self, password):
         return check_password_hash(self.hashed_password, password)
+    #
+    # def __repr__(self):
+    #     return f"{self.id}, {self.name}, {self.grade}, {self.balance}, {self.role}, {self.email}, {self.hashed_password}"

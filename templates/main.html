@@ -118,6 +118,10 @@
             {% if current_user.role == 'admin' %}
             <a href="add_new_user" class="btn btn-primary my-2">Заявки</a>
             {% endif %}
+
+            {% if current_user.role == 'teacher' %}
+            <a href="order" class="btn btn-primary my-2">Заявки для столовой</a>
+            {% endif %}
             <a href="profile" class="btn btn-outline-light">Профиль</a>
         </div>
     </div>

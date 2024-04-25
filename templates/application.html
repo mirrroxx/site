@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Заявки</h1>
+{% for item in application%}
+<div class="col-md6 border rounded">
+    <div>
+        Почта - {{item.email}}, Имя - {{item.name}}, Класс -  {{item.grade}}, Роль - {{item.role}}
+    <div>
+        <a href="/add/{{ item.id }}" class="btn btn-warning">
+            Принять
+        </a>
+        <a href="/reject/{{ item.id }}" class="btn btn-danger">
+            Отклонить
+        </a>
+    </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

@@ -2,7 +2,7 @@ from flask import Flask, render_template, url_for, redirect, request, session
 from data import db_session
 from data.dishes import Dishes
 from data.users import User
-from data.application import application
+from data.application import Application
 from forms.user import RegisterForm, LoginForm
 from flask_login import LoginManager, login_user, login_required, current_user, logout_user
 
@@ -40,7 +40,7 @@ def reqister():
             return render_template('register.html', title='Регистрация',
                                    form=form,
                                    message="Такой пользователь уже есть")
-        user = application(
+        user = Application(
             name=form.name.data,
             email=form.email.data,
             grade=form.grade.data,
@@ -72,6 +72,58 @@ def login():
 @app.route('/inform')
 def inform():
     return render_template('inform.html')
+
+
+@app.route("/add_new_user")
+def add():
+    if current_user.role == 'student' or current_user.role == 'cook':
+        return redirect('/')
+    else:
+        db_sess = db_session.create_session()
+        application = db_sess.query(Application)
+        return render_template("application.html", application=application)
+
+@app.route('/order')
+def order():
+    if current_user.role == 'student':
+        return redirect('/')
+    else:
+        teacher_grade = current_user.grade
+        db_sess = db_session.create_session()
+        data = db_sess.query(User).filter(User.grade==teacher_grade, User.role == 'student').all()
+        return render_template("order.html", data=data)
+
+
+@app.route('/add/<int:id>')
+def add_user(id):
+
+    db_sess = db_session.create_session()
+    data = db_sess.query(Application).filter(Application.id == id).first()
+    user = User()
+    user.name = data.name
+    user.email = data.email
+    user.grade = data.grade
+    user.role = data.role
+    user.hashed_password = data.hashed_password
+    user.balance = data.balance
+    db_sess.add(user)
+    db_sess.commit()
+
+    user = db_sess.query(Application).filter(Application.id == id).first()
+    db_sess.delete(user)
+    db_sess.commit()
+    return redirect('/add_new_user')
+
+@app.route('/reject/<int:id>')
+def reject(id):
+    db_sess = db_session.create_session()
+    user = db_sess.query(Application).filter(Application.id == id).first()
+    db_sess.delete(user)
+    db_sess.commit()
+    return redirect('/add_new_user')
+
+
+
 
 
 @app.route('/profile')
