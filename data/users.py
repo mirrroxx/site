@@ -12,6 +12,12 @@ class User(SqlAlchemyBase, UserMixin):
                            primary_key=True, autoincrement=True)
     name = sqlalchemy.Column(sqlalchemy.String, nullable=True)
 
+    grade = sqlalchemy.Column(sqlalchemy.String, nullable=False)
+
+    balance = sqlalchemy.Column(sqlalchemy.Integer, nullable=False)
+
+    role = sqlalchemy.Column(sqlalchemy.String, nullable=False)
+
     email = sqlalchemy.Column(sqlalchemy.String,
                               index=True, unique=True, nullable=True)
     hashed_password = sqlalchemy.Column(sqlalchemy.String, nullable=True)

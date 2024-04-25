@@ -59,7 +59,7 @@
                 background-color: rgb(89, 97, 104);
                 border-color: rgb(89, 97, 104)
             }
-    </style>
+</style>
 {% endblock %}
 
 {% block content %}
@@ -102,7 +102,24 @@
             </p>
         {% endfor %}
     </p>
-
+    <p>
+        {{ form.grade.label }}<br>
+        {{ form.grade(class="form-control") }}<br>
+        {% for error in form.name.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.role.label }}<br>
+        {{ form.role(class="form-control") }}<br>
+        {% for error in form.name.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
     <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
     {{message}}
 </form>

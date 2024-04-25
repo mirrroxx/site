@@ -42,11 +42,14 @@ def reqister():
         user = User(
             name=form.name.data,
             email=form.email.data,
+            grade=form.grade.data,
+            role=form.role.data,
+            balance=0
         )
         user.set_password(form.password.data)
         db_sess.add(user)
         db_sess.commit()
-        return redirect('/login')
+        return redirect('/inform')
     return render_template('register.html', title='Регистрация', form=form)
 
 
@@ -65,10 +68,19 @@ def login():
     return render_template('login2.html', title='Авторизация', form=form)
 
 
+@app.route('/inform')
+def inform():
+    return render_template('inform.html')
+
+
 @app.route('/profile')
 @login_required
 def profile():
-    return render_template('profile.html')
+    name = current_user.name
+    name = "_".join(name.split())
+    grade = current_user.grade
+    balance = current_user.balance
+    return render_template('profile.html', name=name, balance=balance, grade=grade)
 
 
 @app.route('/')

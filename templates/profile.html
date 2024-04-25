@@ -17,11 +17,15 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label for="username">Имя пользователя:</label>
-                        <input type="text" class="form-control" id="username" readonly>
+                        <input type="text" class="form-control" id="username" readonly value={{name}}>
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Класс:</label>
+                        <input type="text" class="form-control" id="grade" readonly value={{grade}}>
                     </div>
                     <div class="form-group">
                         <label for="balance">Баланс:</label>
-                        <input type="text" class="form-control" id="balance" readonly>
+                        <input type="text" class="form-control" id="balance" readonly value={{balance}}>
                     </div>
                     <div class="form-group">
                         <label for="transactions">Недавние транзакции:</label>
