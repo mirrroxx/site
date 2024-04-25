@@ -57,6 +57,7 @@ def login():
         db_sess = db_session.create_session()
         user = db_sess.query(User).filter(User.email == form.email.data).first()
         if user and user.check_password(form.password.data):
+            login_user(user)
             return redirect("/")
         return render_template('login2.html',
                                message="Неправильный логин или пароль",
@@ -133,7 +134,7 @@ def add_dish():
 
     return render_template("new_dish.html")
 
-
+    
 if __name__ == '__main__':
     db_session.global_init("db/main.db")
     app.run(debug=True)
