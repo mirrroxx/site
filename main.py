@@ -2,6 +2,7 @@ from flask import Flask, render_template, url_for, redirect, request, session
 from data import db_session
 from data.dishes import Dishes
 from data.users import User
+from data.application import application
 from forms.user import RegisterForm, LoginForm
 from flask_login import LoginManager, login_user, login_required, current_user, logout_user
 
@@ -39,7 +40,7 @@ def reqister():
             return render_template('register.html', title='Регистрация',
                                    form=form,
                                    message="Такой пользователь уже есть")
-        user = User(
+        user = application(
             name=form.name.data,
             email=form.email.data,
             grade=form.grade.data,
