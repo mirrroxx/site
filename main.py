@@ -68,6 +68,18 @@ def login():
     return render_template('login2.html', title='Авторизация', form=form)
 
 
+@app.route('/balance', methods=['GET', 'POST'])
+def balance():
+    if request.method == 'POST':
+        amount = request.form['amount']
+        db_sess = db_session.create_session()
+        balance = db_sess.query(User).filter(User.id).first()
+        balance.balance += int(amount)
+        db_sess.commit()
+        return redirect('/')
+    return render_template("balance.html")
+
+
 @app.route('/inform')
 def inform():
     return render_template('inform.html')
@@ -125,41 +137,47 @@ def logout():
 
 
 @app.route('/add_dish', methods=['GET', 'POST'])
+@login_required
 def add_dish():
-    if request.method == 'POST':
-        name_of_dish = request.form['name']
-        time = request.form['menu_type']
-        dish_price = request.form['price']
-        image = request.files['image']
+    if current_user.role == 'student':
+        return redirect('/')
+    else:
+        if request.method == 'POST':
+            name_of_dish = request.form['name']
+            time = request.form['menu_type']
+            dish_price = request.form['price']
+            image = request.files['image']
 
-        dish = Dishes(name=name_of_dish, time=time, price=dish_price)
-        if image:
-            image.save('static/img/' + image.filename)
-            dish.photo = 'img/' + image.filename
-        try:
-            db_sess = db_session.create_session()
-            db_sess.add(dish)
-            db_sess.commit()
-            return redirect('/')
-        except:
-            return "При добавлении произошла ошибка"
-
-    return render_template("new_dish.html")
+            dish = Dishes(name=name_of_dish, time=time, price=dish_price)
+            if image:
+                image.save('static/img/' + image.filename)
+                dish.photo = 'img/' + image.filename
+            try:
+                db_sess = db_session.create_session()
+                db_sess.add(dish)
+                db_sess.commit()
+                return redirect('/')
+            except:
+                return "При добавлении произошла ошибка"
+        return render_template("new_dish.html")
 
 
 @app.route('/dish_delete/<int:id>', methods=['GET', 'POST'])
 @login_required
-def news_delete(id):
-    db_sess = db_session.create_session()
-    dish = db_sess.query(Dishes).filter(Dishes.id == id).first()
-    if dish:
-        db_sess.delete(dish)
-        db_sess.commit()
+def dish_delete(id):
+    if current_user.role == 'student':
+        return redirect('/')
     else:
-        abort(404)
-    return redirect('/')
+        db_sess = db_session.create_session()
+        dish = db_sess.query(Dishes).filter(Dishes.id == id).first()
+        if dish:
+            db_sess.delete(dish)
+            db_sess.commit()
+        else:
+            abort(404)
+        return redirect('/')
 
-    
+
 if __name__ == '__main__':
     db_session.global_init("db/main.db")
     app.run(debug=True)

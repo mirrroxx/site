@@ -111,7 +111,7 @@
 <div class="card" style="width: 18rem;">
     <img src="{{ url_for('static', filename=i.photo) }}" class="card-img-top" alt="изображение блюда">
     <div class="card-body">
-        <h5 class="card-title">Название блюда: {{ i.name }}</h5>
+        <h5 class="card-title">Название блюд: {{ i.name }}</h5>
         <h4 class="card-title">Цена: {{ i.price }}₽</h4>
         {% if current_user.role == 'cook' or current_user.role == 'admin' %}
         <a href="/dish_delete/{{ i.id }}" class="btn btn-danger">
