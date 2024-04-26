@@ -1,15 +1,14 @@
-from flask import Flask, render_template, url_for, redirect, request, session
+from flask import Flask, render_template, url_for, redirect, request, session, abort
 from data import db_session
 from data.dishes import Dishes
 from data.users import User
 from data.application import Application
+import pygame
 from forms.user import RegisterForm, LoginForm
 from flask_login import LoginManager, login_user, login_required, current_user, logout_user
-import os
-import sys
-
-import pygame
 import requests
+import sys
+import os
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -78,6 +77,18 @@ def login():
     return render_template('login2.html', title='Авторизация', form=form)
 
 
+@app.route('/balance', methods=['GET', 'POST'])
+def balance():
+    if request.method == 'POST':
+        amount = request.form['amount']
+        db_sess = db_session.create_session()
+        balance = db_sess.query(User).filter(User.id == current_user.id).first()
+        balance.balance += int(amount)
+        db_sess.commit()
+        return redirect('/')
+    return render_template("balance.html")
+
+
 @app.route('/inform')
 def inform():
     return render_template('inform.html')
@@ -92,6 +103,7 @@ def add():
         application = db_sess.query(Application)
         return render_template("application.html", application=application)
 
+
 @app.route('/order')
 def order():
     if current_user.role == 'student':
@@ -99,13 +111,12 @@ def order():
     else:
         teacher_grade = current_user.grade
         db_sess = db_session.create_session()
-        data = db_sess.query(User).filter(User.grade==teacher_grade, User.role == 'student').all()
+        data = db_sess.query(User).filter(User.grade == teacher_grade, User.role == 'student').all()
         return render_template("order.html", data=data)
 
 
 @app.route('/add/<int:id>')
 def add_user(id):
-
     db_sess = db_session.create_session()
     data = db_sess.query(Application).filter(Application.id == id).first()
     user = User()
@@ -123,6 +134,7 @@ def add_user(id):
     db_sess.commit()
     return redirect('/add_new_user')
 
+
 @app.route('/reject/<int:id>')
 def reject(id):
     db_sess = db_session.create_session()
@@ -132,9 +144,17 @@ def reject(id):
     return redirect('/add_new_user')
 
 
+@app.route('/profile')
+@login_required
+def profile():
+    name = current_user.name
+    name = "_".join(name.split())
+    grade = current_user.grade
+    return render_template('profile.html', name=name, grade=grade)
+
+
 @app.route('/api')
 def api():
-
     map_request = "http://static-maps.yandex.ru/1.x/?ll=37.587093,55.7339748&spn=0.002,0.002&l=map"
     response = requests.get(map_request)
     if not response:
@@ -163,16 +183,6 @@ def api():
     # Удаляем за собой файл с изображением.
     os.remove(map_file)
     return redirect('/')
-
-
-@app.route('/profile')
-@login_required
-def profile():
-    name = current_user.name
-    name = "_".join(name.split())
-    grade = current_user.grade
-    balance = current_user.balance
-    return render_template('profile.html', name=name, balance=balance, grade=grade)
 
 
 @app.route('/')
@@ -217,28 +227,47 @@ def logout():
 
 
 @app.route('/add_dish', methods=['GET', 'POST'])
+@login_required
 def add_dish():
-    if request.method == 'POST':
-        name_of_dish = request.form['name']
-        time = request.form['menu_type']
-        dish_price = request.form['price']
-        image = request.files['image']
+    if current_user.role == 'student':
+        return redirect('/')
+    else:
+        if request.method == 'POST':
+            name_of_dish = request.form['name']
+            time = request.form['menu_type']
+            dish_price = request.form['price']
+            image = request.files['image']
 
-        dish = Dishes(name=name_of_dish, time=time, price=dish_price)
-        if image:
-            image.save('static/img/' + image.filename)
-            dish.photo = 'img/' + image.filename
-        try:
-            db_sess = db_session.create_session()
-            db_sess.add(dish)
+            dish = Dishes(name=name_of_dish, time=time, price=dish_price)
+            if image:
+                image.save('static/img/' + image.filename)
+                dish.photo = 'img/' + image.filename
+            try:
+                db_sess = db_session.create_session()
+                db_sess.add(dish)
+                db_sess.commit()
+                return redirect('/')
+            except:
+                return "При добавлении произошла ошибка"
+        return render_template("new_dish.html")
+
+
+@app.route('/dish_delete/<int:id>', methods=['GET', 'POST'])
+@login_required
+def dish_delete(id):
+    if current_user.role == 'student':
+        return redirect('/')
+    else:
+        db_sess = db_session.create_session()
+        dish = db_sess.query(Dishes).filter(Dishes.id == id).first()
+        if dish:
+            db_sess.delete(dish)
             db_sess.commit()
-            return redirect('/')
-        except:
-            return "При добавлении произошла ошибка"
+        else:
+            abort(404)
+        return redirect('/')
 
-    return render_template("new_dish.html")
 
-    
 if __name__ == '__main__':
     db_session.global_init("db/main.db")
     app.run(debug=True)
