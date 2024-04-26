@@ -118,6 +118,9 @@
             {% if current_user.role == 'admin' %}
             <a href="add_new_user" class="btn btn-primary my-2">Заявки</a>
             {% endif %}
+            {% if current_user.role == 'cook' %}
+            <a href="add_dish" class="btn btn-primary my-2">Добавление меню</a>
+            {% endif %}
 
             {% if current_user.role == 'teacher' or current_user.role == 'admin' %}
             <a href="order" class="btn btn-primary my-2">Заявки для столовой</a>
