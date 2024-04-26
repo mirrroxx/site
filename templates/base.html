@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          crossorigin="anonymous">
+    <title>{{title}}</title>
+    <style>
+        .centered-text {
+                text-align: center;
+                margin-bottom: 40px;
+            }
+
+        .page-name {
+                margin-left: 15px;
+            }
+
+        .row {
+                justify-content: space-between;
+                margin-bottom: 70px;
+            }
+
+        .a-nadpis {
+                margin-left: 90px;
+                margin-top: 20px;
+            }
+
+        .b-nadpis {
+                margin-left: 90px;
+                margin-top: 20px;
+            }
+
+        .c-nadpis {
+                margin-left: 90px;
+                margin-top: 20px;
+            }
+
+        .photo1 {
+                border-radius: 20%;
+                transition: border-radius 0.3s ease-in;
+            }
+
+        .photo2 {
+                border-radius: 20%;
+                transition: border-radius 0.3s ease-in;
+            }
+
+        .photo3 {
+                border-radius: 20%;
+                transition: border-radius 0.3s ease-in;
+            }
+
+        .photo1:hover {
+                border-radius: 10%;
+        }
+
+        .photo2:hover {
+                border-radius: 10%;
+        }
+
+        .photo3:hover {
+                border-radius: 10%;
+        }
+
+        body {
+                background-color: white;
+            }
+
+        .navbar {
+                background-color: rgb(206, 33, 33)
+            }
+
+        .btn {
+                background-color: rgb(206, 33, 33);
+                border-color: rgb(206, 33, 33);
+                border-radius: 5px;
+                transition: border-radius 0.5s ease-in;
+            }
+
+        .btn:hover {
+                border-radius: 15px;
+                background-color: rgb(89, 97, 104);
+                border-color: rgb(89, 97, 104)
+        }
+
+        footer {
+
+    background-color: #333;
+
+    color: #fff;
+
+    text-align: center;
+
+    padding: 48px;
+
+    }
+
+    </style>
+</head>
+<body>
+<header>
+    <div class="navbar navbar-dark shadow-sm">
+        <div class="container d-flex justify-content-between">
+            <a href="/" class="navbar-brand d-flex align-items-center">
+                <img src="{{ url_for('static', filename='img/logo.png') }}" weight="40" height="40"
+                     class="d-inline-block align-text-top">
+                <strong class="page-name">Вкусные перемены</strong>
+            </a>
+            {% if current_user.role == 'admin' %}
+            <a href="add_new_user" class="btn btn-primary my-2">Заявки</a>
+            {% endif %}
+
+            {% if current_user.role == 'teacher' %}
+            <a href="order" class="btn btn-primary my-2">Заявки для столовой</a>
+            {% endif %}
+            <a href="profile" class="btn btn-outline-light">Профиль</a>
+        </div>
+    </div>
+</header>
+<!-- Begin page content -->
+<main role="main" class="container">
+    {% block content %}{% endblock %}
+</main>
+</body>
+</html>
