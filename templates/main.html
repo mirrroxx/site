@@ -120,9 +120,10 @@
             {% endif %}
             {% if current_user.role == 'cook' %}
             <a href="add_dish" class="btn btn-primary my-2">Добавление меню</a>
+            <a href="/" class="btn btn-primary my-2">Заказы</a>
             {% endif %}
 
-            {% if current_user.role == 'teacher' or current_user.role == 'admin' %}
+            {% if current_user.role == 'teacher' %}
             <a href="order" class="btn btn-primary my-2">Заявки для столовой</a>
             {% endif %}
             <a href="profile" class="btn btn-outline-light">Профиль</a>
@@ -153,17 +154,17 @@
                 <figure class="a">
                     <a href="breakfast"><img src="{{ url_for('static', filename='img/breakfast.jpg') }}" width="300"
                                              height="300" class="photo1"></a>
-                    <figcaption class="a-nadpis">Утреннее меню</figcaption>
+                    <figcaption class="a-nadpis">Комплексный завтрак</figcaption>
                 </figure>
                 <figure class="b">
                     <a href="dinner1"><img src="{{ url_for('static', filename='img/dinner2.jpg') }}" width="300"
                                            height="300" class="photo2"></a>
-                    <figcaption class="b-nadpis">Обеденное меню</figcaption>
+                    <figcaption class="b-nadpis">Комплексный обед</figcaption>
                 </figure>
                 <figure class="c">
                     <a href="dinner2"><img src="{{ url_for('static', filename='img/dinner.jpg') }}" width="300"
                                            height="300" class="photo3"></a>
-                    <figcaption class="c-nadpis">Вечернее меню</figcaption>
+                    <figcaption class="c-nadpis">Комплексный ужин</figcaption>
                 </figure>
             </div>
         </div>
